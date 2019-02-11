@@ -1,19 +1,18 @@
 function throughOnce(fn) {
-    var result;
+    let isEven = false;
 
-    if (fn) {
-        result = fn.apply(logThroughOnce||this, arguments);
-        fn = null;
-    }
-    return result;
-};
+    return function() {
+        isEven = !isEven;
+        if (isEven)
+        return fn.apply(this,arguments);
+    };
+}
 
-
-var logThroughOnce = throughOnce(function(text) {
+const logThroughOnce = throughOnce(function(text) {
   console.log(text);
 });
 
-logThroughOnce("Hello World!"); // "Hello World!"
-logThroughOnce("Hello World!"); //
-logThroughOnce("Hello World!"); // "Hello World!"
-logThroughOnce("Hello World!"); //
+logThroughOnce("Hello World!1"); // "Hello World!"
+logThroughOnce("Hello World!2"); //
+logThroughOnce("Hello World!3"); // "Hello World!"
+logThroughOnce("Hello World!4"); //
